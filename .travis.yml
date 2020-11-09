@@ -8,7 +8,7 @@ branches:
 
 before_script:
   - du -sh /tmp/*
-  - git clone -b gh-pages https://github.com/lionants02/mis-api-doc.git /tmp/api-doc
+  - git clone -b gh-pages https://github.com/hii-in-th/thing-doc.git /tmp/api-doc
   - ls -al /tmp/api-doc/*
   - npm install -g aglio
 
@@ -22,5 +22,5 @@ script:
   - git add data
   - git add index.html
   - git commit -m "Build html"
-  - git remote add origin-gh-pages https://${GH_TOKEN}@github.com/lionants02/mis-api-doc.git > /dev/null 2>&1
+  - git remote add origin-gh-pages https://${GH_TOKEN}@github.com/hii-in-th/thing-doc.git > /dev/null 2>&1
   - git push --set-upstream origin-gh-pages gh-pages

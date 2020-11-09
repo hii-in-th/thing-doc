@@ -18,18 +18,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        git clone -b gh-pages https://github.com/hii-in-th/thing-doc.git /tmp/api-doc
         npm install -g aglio
-        ls -al *
-        rsync -av --delete ./data /tmp/api-doc/
-        aglio -i blueprint.apib --theme-variables flatly -o /tmp/index.html
-        cd /tmp/api-doc
-        git checkout gh-pages
-        mv ../index.html .
-        git add data
-        git add index.html
-        git commit -m "Build html"
-        git remote add origin-gh-pages https://${GH_TOKEN}@github.com/hii-in-th/thing-doc.git > /dev/null 2>&1
-        git push --set-upstream origin-gh-pages gh-pages
+        aglio -i blueprint.apib --theme-variables flatly -o ./build/index.html
+        rsync -av --delete ./data ./build/
       env:
         CI: true
+
+    - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch

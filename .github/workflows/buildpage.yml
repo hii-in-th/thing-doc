@@ -19,7 +19,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: |
         git clone -b gh-pages https://github.com/hii-in-th/thing-doc.git /tmp/api-doc
-        ls -al /tmp/api-doc/*
         npm install -g aglio
         ls -al *
         rsync -av --delete ./data /tmp/api-doc/

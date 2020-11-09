@@ -17,19 +17,20 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: git clone -b gh-pages https://github.com/hii-in-th/thing-doc.git /tmp/api-doc
-    - run: ls -al /tmp/api-doc/*
-    - run: npm install -g aglio
-    - run: ls -al *
-    - run: rsync -av --delete ./data /tmp/api-doc/
-    - run: aglio -i blueprint.apib --theme-variables flatly -o /tmp/index.html
-    - run: cd /tmp/api-doc
-    - run: git checkout gh-pages
-    - run: mv ../index.html .
-    - run: git add data
-    - run: git add index.html
-    - run: git commit -m "Build html"
-    - run: git remote add origin-gh-pages https://${GH_TOKEN}@github.com/hii-in-th/thing-doc.git > /dev/null 2>&1
-    - run: git push --set-upstream origin-gh-pages gh-pages
+    - run: |
+        git clone -b gh-pages https://github.com/hii-in-th/thing-doc.git /tmp/api-doc
+        ls -al /tmp/api-doc/*
+        npm install -g aglio
+        ls -al *
+        rsync -av --delete ./data /tmp/api-doc/
+        aglio -i blueprint.apib --theme-variables flatly -o /tmp/index.html
+        cd /tmp/api-doc
+        git checkout gh-pages
+        mv ../index.html .
+        git add data
+        git add index.html
+        git commit -m "Build html"
+        git remote add origin-gh-pages https://${GH_TOKEN}@github.com/hii-in-th/thing-doc.git > /dev/null 2>&1
+        git push --set-upstream origin-gh-pages gh-pages
       env:
         CI: true

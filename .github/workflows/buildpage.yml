@@ -17,7 +17,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: du -sh /tmp/*
     - run: git clone -b gh-pages https://github.com/hii-in-th/thing-doc.git /tmp/api-doc
     - run: ls -al /tmp/api-doc/*
     - run: npm install -g aglio

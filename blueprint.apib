@@ -10,18 +10,82 @@ HOST: https://gw.hii.in.th/thing
 
 # Group Authorization
 
-  การใช้งาน จำเป็นต้องมี access token
+## การสร้าง Device access token [POST /auth/user/tokens]
+  การใช้งาน api จำเป็นต้องมี device access token
 
-    `Authorization: Bearer {token}`
++ Request (application/json)
+
+    + Attributes (LoginBody , fixed-type)
+
++ Response 201 (application/json)
+
+    + Attributes (AccessTokenBody , fixed-type)
 
 # Group การวัดค่า
 
-## เปิด Session [POST /room]
+## เปิด Session [POST /sessions]
 
-  ก่อนเริ่มการใส่ข้อมูลผู้วัดแต่ละคน ต้องเริ่ม Session ก่อน
+  ก่อนเริ่มการใส่ข้อมูลของผู้วัดแต่ละคน ต้องมีการลงทะเบียนการวัดก่อน
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {access token}
+
+    + Attributes (CreateSession , fixed-type)
+
++ Response 201 (application/json)
+
+    + Attributes (SessionReturn , fixed-type)
 
 ## Data Structures
 
 # LoginBody (object)
 + username: `user999` (string, required)
 + password: `pa$$word` (string, required)
+
+# AccessTokenBody (object)
++ accessToken: `eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9` (string,required) - รหัส access token
+
+# CreateSession (object)
++ citizenId: `1222311234321` (string, required) - เลขบัตรประชาชน
++ citizenIdInput (CitizenInput, required) - ลักษณะการนำเข้าข้อมูล
++ birthDate: `1990-06-05` (string, required) - วันเกิด
++ name: `ธนชัย ทองคำ` - ชื่อ นามสกุล
++ sex (Sex) - เพศ
++ whoDid (WhoDid) - ใครเป็นคนวัดให้
+
+# SessionReturn (object)
++ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, required) - หมายเลข session
++ subject (Person)
+
+# Person (object)
++ type: `Person` (string, fixed) - ค่าคงที่
++ age: 43 (number) - อายุ
++ height: 170.0 (number) - ส่วนสูง
++ weigth: 65.2 (number) - น้ำหนัก
++ bloodPressure (BloodPressure) - ข้อมูลความดัน
+
+# BloodPressure (object)
++ sys: 110 (number)
++ dia: 60 (number)
++ level (BloodPressureLevel)
+
+# BloodPressureLevel (enum)
++ LOW
++ NORMAL
++ HEIGHT
+
+# Sex (enum)
++ MALE - ผู้ชาย
++ FEMAIL - ผู้หญิง
+
+# CitizenInput (enum)
++ CARD - บัตรประชาชน
++ FACE - ใบหน้า
++ TYPING - ด้วยการพิมพ์
+
+# WhoDid (enum)
++ SELF - วัดด้วยตัวเอง
++ OFFICER - วัดด้วยเจ้าหน้าที่

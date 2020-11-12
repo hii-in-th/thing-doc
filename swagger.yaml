@@ -1,0 +1,1057 @@
+swagger: '2.0'
+info:
+  title: ''
+  version: ''
+  description: ''
+host: gw.hii.in.th
+basePath: /thing
+schemes:
+  - https
+paths:
+  /auth/user/tokens:
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              accessToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9
+          schema:
+            type: object
+            properties:
+              accessToken:
+                type: string
+                description: รหัส access token
+            required:
+              - accessToken
+            additionalProperties: false
+      summary: การสร้าง Device access token
+      operationId: การสร้าง Device access token
+      description: การใช้งาน api จำเป็นต้องมี device access token
+      tags:
+        - Authorization
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+            required:
+              - username
+              - password
+            additionalProperties: false
+            example:
+              username: user999
+              password: pa$$word
+      produces:
+        - application/json
+  /sessions/:
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+              subject:
+                type: Person
+                age: 43
+                height: 170
+                weigth: 65.2
+                bloodPressure:
+                  sys: 130
+                  dia: 98
+                  pulse: 66
+                data:
+                  height:
+                    height: 168
+                    sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                    time: '2019-06-05T06:19:25+00:00'
+                  weight:
+                    weight: 48
+                    type: WHEELCHAIR
+                    sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                    time: '2019-06-05T06:19:27+00:00'
+                  bloodPressure:
+                    sys: 130
+                    dia: 98
+                    pulse: 66
+                    sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                    time: '2019-06-05T06:19:32+00:00'
+                    level: isLow
+                  temperature:
+                    temperature: 37.1
+                    type: INFRARED_CAMERA
+                    sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                    time: '2019-06-05T06:19:30+00:00'
+                  spO2:
+                    spo2: 98
+                    pulse: 66
+                    sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                    time: '2019-06-05T06:19:29+00:00'
+          schema:
+            type: object
+            properties:
+              sessionId:
+                type: string
+                description: หมายเลข session
+              subject:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - Person
+                    description: ค่าคงที่
+                  age:
+                    type: number
+                    description: อายุ
+                  height:
+                    type: number
+                    description: ส่วนสูง
+                  weigth:
+                    type: number
+                    description: น้ำหนัก
+                  bloodPressure:
+                    type: object
+                    properties:
+                      sys:
+                        type: number
+                      dia:
+                        type: number
+                      pulse:
+                        type: number
+                    description: ข้อมูลความดัน
+                  data:
+                    type: object
+                    properties:
+                      height:
+                        type: object
+                        properties:
+                          height:
+                            type: number
+                            description: ข้อมูลส่วนสูง
+                          sessionId:
+                            type: string
+                          time:
+                            type: string
+                      weight:
+                        type: object
+                        properties:
+                          weight:
+                            type: number
+                          type:
+                            type: string
+                            enum:
+                              - WHEELCHAIR
+                              - CHAIR
+                              - UNDEFINED
+                          sessionId:
+                            type: string
+                          time:
+                            type: string
+                      bloodPressure:
+                        type: object
+                        properties:
+                          sys:
+                            type: number
+                          dia:
+                            type: number
+                          pulse:
+                            type: number
+                          sessionId:
+                            type: string
+                          time:
+                            type: string
+                          level:
+                            type: string
+                            enum:
+                              - isLow
+                              - isNormal
+                              - isPreHigh
+                              - isHigh
+                      temperature:
+                        type: object
+                        properties:
+                          temperature:
+                            type: number
+                          type:
+                            type: string
+                            enum:
+                              - INFRARED_CAMERA
+                              - INFRARED
+                              - PLATE
+                              - UNDEFINED
+                          sessionId:
+                            type: string
+                          time:
+                            type: string
+                      spO2:
+                        type: object
+                        properties:
+                          spo2:
+                            type: number
+                          pulse:
+                            type: number
+                          sessionId:
+                            type: string
+                          time:
+                            type: string
+                required:
+                  - type
+            required:
+              - sessionId
+              - subject
+            additionalProperties: false
+      summary: เปิด Session
+      operationId: เปิด Session
+      description: ก่อนเริ่มการใส่ข้อมูลของผู้วัดแต่ละคน ต้องมีการลงทะเบียนการวัดก่อน
+      tags:
+        - การวัดค่า
+      parameters:
+        - name: autoCommit
+          in: query
+          description: |
+
+            ``true = บันทึกค่าอัตโนมัติ``
+          required: false
+          x-example: 'true'
+          type: boolean
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              citizenId:
+                type: string
+                description: เลขบัตรประชาชน
+              citizenIdInput:
+                type: string
+                enum:
+                  - CARD
+                  - FACE
+                  - TYPING
+                description: ลักษณะการนำเข้าข้อมูล
+              birthDate:
+                type: string
+                description: วันเกิด
+              name:
+                type: string
+                description: ชื่อ นามสกุล
+              sex:
+                type: string
+                enum:
+                  - MALE
+                  - FEMAIL
+                description: เพศ
+              whoDid:
+                type: string
+                enum:
+                  - SELF
+                  - OFFICER
+                description: ใครเป็นคนวัดให้
+              data:
+                type: object
+                properties:
+                  height:
+                    type: object
+                    properties:
+                      height:
+                        type: number
+                        description: ข้อมูลส่วนสูง
+                  weight:
+                    type: object
+                    properties:
+                      weight:
+                        type: number
+                      type:
+                        type: string
+                        enum:
+                          - WHEELCHAIR
+                          - CHAIR
+                          - UNDEFINED
+                  bloodPressure:
+                    type: object
+                    properties:
+                      sys:
+                        type: number
+                      dia:
+                        type: number
+                      pulse:
+                        type: number
+                  temperature:
+                    type: object
+                    properties:
+                      temperature:
+                        type: number
+                      type:
+                        type: string
+                        enum:
+                          - INFRARED_CAMERA
+                          - INFRARED
+                          - PLATE
+                          - UNDEFINED
+                  spO2:
+                    type: object
+                    properties:
+                      spo2:
+                        type: number
+                      pulse:
+                        type: number
+            required:
+              - citizenId
+              - citizenIdInput
+              - birthDate
+              - name
+              - sex
+              - whoDid
+            additionalProperties: false
+            example:
+              citizenId: '1222311234321'
+              citizenIdInput: CARD
+              birthDate: '1990-06-05'
+              name: ธนชัย ทองคำ
+              sex: MALE
+              whoDid: SELF
+              data:
+                height:
+                  height: 168
+                weight:
+                  weight: 48
+                  type: WHEELCHAIR
+                bloodPressure:
+                  sys: 130
+                  dia: 98
+                  pulse: 66
+                temperature:
+                  temperature: 37.1
+                  type: INFRARED_CAMERA
+                spO2:
+                  spo2: 98
+                  pulse: 66
+      produces:
+        - application/json
+      security:
+        - oauth2: []
+  '/session/{sessionId}/heights':
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              height: 168
+              sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+              time: '2019-06-05T06:19:25+00:00'
+          schema:
+            type: object
+            properties:
+              height:
+                type: number
+                description: ข้อมูลส่วนสูง
+              sessionId:
+                type: string
+              time:
+                type: string
+            required:
+              - height
+              - sessionId
+              - time
+            additionalProperties: false
+      summary: ใส่ข้อมูลส่วนสูง
+      operationId: ใส่ข้อมูลส่วนสูง
+      description: ใส่ข้อมูลส่วนสูง
+      tags:
+        - การวัดค่า
+      parameters:
+        - name: sessionId
+          in: path
+          description: |
+
+            ``หมายเลข session id``
+          required: true
+          x-example: bba8104c-8754-11e9-bc42-526af7764f64
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              height:
+                type: number
+                description: ข้อมูลส่วนสูง
+            required:
+              - height
+            additionalProperties: false
+            example:
+              height: 168
+      produces:
+        - application/json
+      security:
+        - oauth2: []
+  '/session/{sessionId}/weights':
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              weight: 48
+              type: WHEELCHAIR
+              sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+              time: '2019-06-05T06:19:27+00:00'
+          schema:
+            type: object
+            properties:
+              weight:
+                type: number
+              type:
+                type: string
+                enum:
+                  - WHEELCHAIR
+                  - CHAIR
+                  - UNDEFINED
+              sessionId:
+                type: string
+              time:
+                type: string
+            required:
+              - weight
+              - type
+              - sessionId
+              - time
+            additionalProperties: false
+      summary: ข้อมูลน้ำหนัก
+      operationId: ข้อมูลน้ำหนัก
+      description: ใส่ข้อมูลน้ำหนัก
+      tags:
+        - การวัดค่า
+      parameters:
+        - name: sessionId
+          in: path
+          description: |
+
+            ``หมายเลข session id``
+          required: true
+          x-example: bba8104c-8754-11e9-bc42-526af7764f64
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              weight:
+                type: number
+              type:
+                type: string
+                enum:
+                  - WHEELCHAIR
+                  - CHAIR
+                  - UNDEFINED
+            required:
+              - weight
+              - type
+            additionalProperties: false
+            example:
+              weight: 48
+              type: WHEELCHAIR
+      produces:
+        - application/json
+      security:
+        - oauth2: []
+  '/session/{sessionId}/spo2':
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              spo2: 98
+              pulse: 66
+              sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+              time: '2019-06-05T06:19:29+00:00'
+          schema:
+            type: object
+            properties:
+              spo2:
+                type: number
+              pulse:
+                type: number
+              sessionId:
+                type: string
+              time:
+                type: string
+            required:
+              - spo2
+              - pulse
+              - sessionId
+              - time
+            additionalProperties: false
+      summary: ข้อมูลค่าออกซิเจนในเลือด
+      operationId: ข้อมูลค่าออกซิเจนในเลือด
+      description: ใส่ข้อมูลออกซิเจนในเลือด
+      tags:
+        - การวัดค่า
+      parameters:
+        - name: sessionId
+          in: path
+          description: |
+
+            ``หมายเลข session id``
+          required: true
+          x-example: bba8104c-8754-11e9-bc42-526af7764f64
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              spo2:
+                type: number
+              pulse:
+                type: number
+            required:
+              - spo2
+              - pulse
+            additionalProperties: false
+            example:
+              spo2: 98
+              pulse: 66
+      produces:
+        - application/json
+      security:
+        - oauth2: []
+  '/session/{sessionId}/temperature':
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              temperature: 37.1
+              type: INFRARED_CAMERA
+              sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+              time: '2019-06-05T06:19:30+00:00'
+          schema:
+            type: object
+            properties:
+              temperature:
+                type: number
+              type:
+                type: string
+                enum:
+                  - INFRARED_CAMERA
+                  - INFRARED
+                  - PLATE
+                  - UNDEFINED
+              sessionId:
+                type: string
+              time:
+                type: string
+            required:
+              - temperature
+              - type
+              - sessionId
+              - time
+            additionalProperties: false
+      summary: ข้อมูลอุณหภูมิ
+      operationId: ข้อมูลอุณหภูมิ
+      description: ใส่ข้อมูลอุณหภูมิ
+      tags:
+        - การวัดค่า
+      parameters:
+        - name: sessionId
+          in: path
+          description: |
+
+            ``หมายเลข session id``
+          required: true
+          x-example: bba8104c-8754-11e9-bc42-526af7764f64
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              temperature:
+                type: number
+              type:
+                type: string
+                enum:
+                  - INFRARED_CAMERA
+                  - INFRARED
+                  - PLATE
+                  - UNDEFINED
+            required:
+              - temperature
+              - type
+            additionalProperties: false
+            example:
+              temperature: 37.1
+              type: INFRARED_CAMERA
+      produces:
+        - application/json
+      security:
+        - oauth2: []
+  '/session/{sessionId}/blood-pressures':
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              sys: 130
+              dia: 98
+              pulse: 66
+              sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+              time: '2019-06-05T06:19:32+00:00'
+              level: isLow
+          schema:
+            type: object
+            properties:
+              sys:
+                type: number
+              dia:
+                type: number
+              pulse:
+                type: number
+              sessionId:
+                type: string
+              time:
+                type: string
+              level:
+                type: string
+                enum:
+                  - isLow
+                  - isNormal
+                  - isPreHigh
+                  - isHigh
+            required:
+              - sys
+              - dia
+              - pulse
+              - sessionId
+              - time
+              - level
+            additionalProperties: false
+      summary: ข้อมูลความดันเลือด
+      operationId: ข้อมูลความดันเลือด
+      description: ใส่ข้อมูลอุณหภูมิ
+      tags:
+        - การวัดค่า
+      parameters:
+        - name: sessionId
+          in: path
+          description: |
+
+            ``หมายเลข session id``
+          required: true
+          x-example: bba8104c-8754-11e9-bc42-526af7764f64
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              sys:
+                type: number
+              dia:
+                type: number
+              pulse:
+                type: number
+            required:
+              - sys
+              - dia
+              - pulse
+            additionalProperties: false
+            example:
+              sys: 130
+              dia: 98
+              pulse: 66
+      produces:
+        - application/json
+      security:
+        - oauth2: []
+  '/session/{sessionId}/commit':
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              height:
+                height: 168
+                sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                time: '2019-06-05T06:19:25+00:00'
+              weight:
+                weight: 48
+                type: WHEELCHAIR
+                sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                time: '2019-06-05T06:19:27+00:00'
+              bloodPressure:
+                sys: 130
+                dia: 98
+                pulse: 66
+                sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                time: '2019-06-05T06:19:32+00:00'
+                level: isLow
+              temperature:
+                temperature: 37.1
+                type: INFRARED_CAMERA
+                sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                time: '2019-06-05T06:19:30+00:00'
+              spO2:
+                spo2: 98
+                pulse: 66
+                sessionId: bba8104c-8754-11e9-bc42-526af7764f64
+                time: '2019-06-05T06:19:29+00:00'
+          schema:
+            type: object
+            properties:
+              height:
+                type: object
+                properties:
+                  height:
+                    type: number
+                    description: ข้อมูลส่วนสูง
+                  sessionId:
+                    type: string
+                  time:
+                    type: string
+              weight:
+                type: object
+                properties:
+                  weight:
+                    type: number
+                  type:
+                    type: string
+                    enum:
+                      - WHEELCHAIR
+                      - CHAIR
+                      - UNDEFINED
+                  sessionId:
+                    type: string
+                  time:
+                    type: string
+              bloodPressure:
+                type: object
+                properties:
+                  sys:
+                    type: number
+                  dia:
+                    type: number
+                  pulse:
+                    type: number
+                  sessionId:
+                    type: string
+                  time:
+                    type: string
+                  level:
+                    type: string
+                    enum:
+                      - isLow
+                      - isNormal
+                      - isPreHigh
+                      - isHigh
+              temperature:
+                type: object
+                properties:
+                  temperature:
+                    type: number
+                  type:
+                    type: string
+                    enum:
+                      - INFRARED_CAMERA
+                      - INFRARED
+                      - PLATE
+                      - UNDEFINED
+                  sessionId:
+                    type: string
+                  time:
+                    type: string
+              spO2:
+                type: object
+                properties:
+                  spo2:
+                    type: number
+                  pulse:
+                    type: number
+                  sessionId:
+                    type: string
+                  time:
+                    type: string
+            additionalProperties: false
+      summary: บันทึกผลพร้อมคืนค่าข้อมูลการวัด
+      operationId: บันทึกผลพร้อมคืนค่าข้อมูลการวัด
+      description: บันทึกผลการวัด
+      tags:
+        - การวัดค่า
+      parameters:
+        - name: sessionId
+          in: path
+          description: |
+
+            ``หมายเลข session id``
+          required: true
+          x-example: bba8104c-8754-11e9-bc42-526af7764f64
+          type: string
+      produces:
+        - application/json
+      security:
+        - oauth2: []
+definitions:
+  การสร้าง Device access token: {}
+  เปิด Session: {}
+  ใส่ข้อมูลส่วนสูง: {}
+  ข้อมูลน้ำหนัก: {}
+  ข้อมูลค่าออกซิเจนในเลือด: {}
+  ข้อมูลอุณหภูมิ: {}
+  ข้อมูลความดันเลือด: {}
+  บันทึกผลพร้อมคืนค่าข้อมูลการวัด: {}
+  BloodPressure:
+    type: object
+    properties:
+      sys:
+        type: number
+      dia:
+        type: number
+      pulse:
+        type: number
+  BloodPressureReturn:
+    allOf:
+      - $ref: '#/definitions/BloodPressure'
+      - type: object
+        properties:
+          sessionId:
+            type: string
+          time:
+            type: string
+          level:
+            $ref: '#/definitions/BloodPressureLevel'
+  BloodPressureLevel:
+    type: string
+    enum:
+      - isLow
+      - isNormal
+      - isPreHigh
+      - isHigh
+  Temperature:
+    type: object
+    properties:
+      temperature:
+        type: number
+      type:
+        $ref: '#/definitions/TemperatureType'
+  TemperatureReturn:
+    allOf:
+      - $ref: '#/definitions/Temperature'
+      - type: object
+        properties:
+          sessionId:
+            type: string
+          time:
+            type: string
+  TemperatureType:
+    type: string
+    enum:
+      - INFRARED_CAMERA
+      - INFRARED
+      - PLATE
+      - UNDEFINED
+  SPO2:
+    type: object
+    properties:
+      spo2:
+        type: number
+      pulse:
+        type: number
+  SPO2Return:
+    allOf:
+      - $ref: '#/definitions/SPO2'
+      - type: object
+        properties:
+          sessionId:
+            type: string
+          time:
+            type: string
+  Weight:
+    type: object
+    properties:
+      weight:
+        type: number
+      type:
+        $ref: '#/definitions/WeightType'
+  WightReturn:
+    allOf:
+      - $ref: '#/definitions/Weight'
+      - type: object
+        properties:
+          sessionId:
+            type: string
+          time:
+            type: string
+  WeightType:
+    type: string
+    enum:
+      - WHEELCHAIR
+      - CHAIR
+      - UNDEFINED
+  Height:
+    type: object
+    properties:
+      height:
+        type: number
+        description: ข้อมูลส่วนสูง
+  HeightReturn:
+    allOf:
+      - $ref: '#/definitions/Height'
+      - type: object
+        properties:
+          sessionId:
+            type: string
+          time:
+            type: string
+  LoginBody:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  AccessTokenBody:
+    type: object
+    required:
+      - accessToken
+    properties:
+      accessToken:
+        type: string
+        description: รหัส access token
+  CreateSession:
+    type: object
+    required:
+      - citizenId
+      - citizenIdInput
+      - birthDate
+    properties:
+      citizenId:
+        type: string
+        description: เลขบัตรประชาชน
+      citizenIdInput:
+        $ref: '#/definitions/CitizenInput'
+        description: ลักษณะการนำเข้าข้อมูล
+      birthDate:
+        type: string
+        description: วันเกิด
+      name:
+        type: string
+        description: ชื่อ นามสกุล
+      sex:
+        $ref: '#/definitions/Sex'
+        description: เพศ
+      whoDid:
+        $ref: '#/definitions/WhoDid'
+        description: ใครเป็นคนวัดให้
+      data:
+        $ref: '#/definitions/InputData'
+  InputData:
+    type: object
+    properties:
+      height:
+        $ref: '#/definitions/Height'
+      weight:
+        $ref: '#/definitions/Weight'
+      bloodPressure:
+        $ref: '#/definitions/BloodPressure'
+      temperature:
+        $ref: '#/definitions/Temperature'
+      spO2:
+        $ref: '#/definitions/SPO2'
+  InputDataReturn:
+    type: object
+    properties:
+      height:
+        $ref: '#/definitions/HeightReturn'
+      weight:
+        $ref: '#/definitions/WightReturn'
+      bloodPressure:
+        $ref: '#/definitions/BloodPressureReturn'
+      temperature:
+        $ref: '#/definitions/TemperatureReturn'
+      spO2:
+        $ref: '#/definitions/SPO2Return'
+  SessionReturn:
+    type: object
+    required:
+      - sessionId
+    properties:
+      sessionId:
+        type: string
+        description: หมายเลข session
+      subject:
+        $ref: '#/definitions/Person'
+  Person:
+    type: object
+    properties:
+      type:
+        type: string
+        description: ค่าคงที่
+      age:
+        type: number
+        description: อายุ
+      height:
+        type: number
+        description: ส่วนสูง
+      weigth:
+        type: number
+        description: น้ำหนัก
+      bloodPressure:
+        $ref: '#/definitions/BloodPressure'
+        description: ข้อมูลความดัน
+      data:
+        $ref: '#/definitions/InputDataReturn'
+  Sex:
+    type: string
+    enum:
+      - MALE
+      - FEMAIL
+  CitizenInput:
+    type: string
+    enum:
+      - CARD
+      - FACE
+      - TYPING
+  WhoDid:
+    type: string
+    enum:
+      - SELF
+      - OFFICER
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: ''
+    tokenUrl: ''
+    scopes: {}
+tags:
+  - name: Introduction
+    description: |-
+      # Thing API
+
+      เอกสารการสเปค **Thing API.**
+  - name: Authorization
+  - name: การวัดค่า

@@ -23,9 +23,13 @@ HOST: https://gw.hii.in.th/thing
 
 # Group การวัดค่า
 
-## เปิด Session [POST /sessions]
+## เปิด Session [POST /sessions/{?autoCommit}]
 
   ก่อนเริ่มการใส่ข้อมูลของผู้วัดแต่ละคน ต้องมีการลงทะเบียนการวัดก่อน
+
++ Parameters
+    + autoCommit: true (boolean, optional)
+      ``true = บันทึกค่าอัตโนมัติ``
 
 + Request (application/json)
 
@@ -216,6 +220,14 @@ HOST: https://gw.hii.in.th/thing
 + name: `ธนชัย ทองคำ` - ชื่อ นามสกุล
 + sex (Sex) - เพศ
 + whoDid (WhoDid) - ใครเป็นคนวัดให้
++ data (InputData ,optional)
+
+# InputData (object)
++ height (Height ,optional)
++ weight (Weight ,optional)
++ bloodPressure (BloodPressure ,optional)
++ temperature (Temperature ,optional)
++ spO2 (SPO2 ,optional)
 
 # SessionReturn (object)
 + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, required) - หมายเลข session

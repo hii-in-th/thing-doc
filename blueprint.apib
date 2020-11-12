@@ -87,7 +87,37 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (SPO2Return , fixed-type)
 
+## ข้อมูลอุณหภูมิ [POST /temperature]
+
+    ใส่ข้อมูลอุณหภูมิ
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {access token}
+
+    + Attributes (Temperature , fixed-type)
+
++ Response 201 (application/json)
+
+    + Attributes (TemperatureReturn , fixed-type)
+
 ## Data Structures
+
+# Temperature (object)
++ temperature: 37.1 (number, fixed-type)
++ type (TemperatureType)
+
+# TemperatureReturn (Temperature)
++ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
++ time: `2019-06-05T06:19:30+00:00` (string, fixed-type)
+
+# TemperatureType
++ INFRARED_CAMERA - กล้อง Infrared
++ INFRARED - Infrared sensor
++ PLATE - Sensor แบบแผ่น
++ UNDEFINED - ไม่ระบุ
 
 # SPO2 (object)
 + spo2: 98.0 (number, fixed-type)

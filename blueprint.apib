@@ -147,6 +147,14 @@ HOST: https://gw.hii.in.th/thing
 
     บันทึกผลการวัด
 
++ Parameters
+    + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string,required)
+      ``หมายเลข session id``
+
++ Response 201 (application/json)
+
+    + Attributes (InputDataReturn , fixed-type)
+
 ## Data Structures
 
 # BloodPressure (object)
@@ -230,6 +238,13 @@ HOST: https://gw.hii.in.th/thing
 + temperature (Temperature ,optional)
 + spO2 (SPO2 ,optional)
 
+# InputDataReturn (object)
++ height (HeightReturn ,optional)
++ weight (WightReturn ,optional)
++ bloodPressure (BloodPressureReturn ,optional)
++ temperature (TemperatureReturn ,optional)
++ spO2 (SPO2Return ,optional)
+
 # SessionReturn (object)
 + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, required) - หมายเลข session
 + subject (Person)
@@ -240,6 +255,7 @@ HOST: https://gw.hii.in.th/thing
 + height: 170.0 (number) - ส่วนสูง
 + weigth: 65.2 (number) - น้ำหนัก
 + bloodPressure (BloodPressure) - ข้อมูลความดัน
++ data (InputDataReturn, optional)
 
 # Sex (enum)
 + MALE - ผู้ชาย

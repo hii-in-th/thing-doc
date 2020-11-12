@@ -39,7 +39,27 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (SessionReturn , fixed-type)
 
+## ใส่ข้อมูลส่วนสูง [POST /heights]
+
+    ใส่ข้อมูลส่วนสูง
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {access token}
+
+    + Attributes (Height , fixed-type)
+
+
 ## Data Structures
+
+# Height (object)
++ height: 168 (number, fixed-type) - ข้อมูลส่วนสูง
+
+# HeightReturn (Height)
++ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
++ time: `2019-06-05T06:19:25+00:00` (string, fixed-type)
 
 # LoginBody (object)
 + username: `user999` (string, required)

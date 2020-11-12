@@ -24,7 +24,7 @@ jobs:
         rsync -av --delete ./data ./build/
         npm cache clean -f
         npm install -g n
-        n 12
+        sudo n 12
         npm install -g apib2swagger
         apib2swagger -i blueprint.apib --yaml -o ./build/swagger.yaml
       env:

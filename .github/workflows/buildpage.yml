@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Aglio Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -22,6 +22,11 @@ jobs:
         mkdir build
         aglio -i blueprint.apib --theme-variables flatly -o ./build/index.html
         rsync -av --delete ./data ./build/
+        npm cache clean -f
+        npm install -g n
+        n 12
+        npm install -g apib2swagger
+        apib2swagger -i blueprint.apib --yaml -o ./build/swagger.yaml
       env:
         CI: true
 

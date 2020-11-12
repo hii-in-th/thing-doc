@@ -71,7 +71,31 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (WightReturn , fixed-type)
 
+## ข้อมูลค่าออกซิเจนในเลือด [POST /spo2]
+
+    ใส่ข้อมูลน้ำหนัก
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {access token}
+
+    + Attributes (SPO2 , fixed-type)
+
++ Response 201 (application/json)
+
+    + Attributes (SPO2Return , fixed-type)
+
 ## Data Structures
+
+# SPO2 (object)
++ spo2: 98.0 (number, fixed-type)
++ pulse: 66.0 (number, fixed-type)
+
+# SPO2Return (SPO2)
++ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
++ time: `2019-06-05T06:19:29+00:00` (string, fixed-type)
 
 # Weight (object)
 + weight: 48 (number, fixed-type)

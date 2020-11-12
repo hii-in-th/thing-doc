@@ -103,7 +103,39 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (TemperatureReturn , fixed-type)
 
+## ข้อมูลความดันเลือด [POST /blood-pressures]
+
+    ใส่ข้อมูลอุณหภูมิ
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {access token}
+
+    + Attributes (BloodPressure , fixed-type)
+
++ Response 201 (application/json)
+
+    + Attributes (BloodPressureReturn , fixed-type)
+
 ## Data Structures
+
+# BloodPressure (object)
++ sys: 130.0 (number, fixed-type)
++ dia: 98.0 (number, fixed-type)
++ pulse: 66.0 (number, fixed-type)
+
+# BloodPressureReturn (BloodPressure)
++ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
++ level (BloodPressureLevel)
++ time: `2019-06-05T06:19:32+00:00` (string, fixed-type)
+
+# BloodPressureLevel (enum)
++ isLow - ความดันต่ำ
++ isNormal - ความดันปกติ
++ isPreHigh - เสี่ยงความดันสูง
++ isHigh - ความดันสูง
 
 # Temperature (object)
 + temperature: 37.1 (number, fixed-type)
@@ -113,7 +145,7 @@ HOST: https://gw.hii.in.th/thing
 + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
 + time: `2019-06-05T06:19:30+00:00` (string, fixed-type)
 
-# TemperatureType
+# TemperatureType (enum)
 + INFRARED_CAMERA - กล้อง Infrared
 + INFRARED - Infrared sensor
 + PLATE - Sensor แบบแผ่น

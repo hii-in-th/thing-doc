@@ -154,16 +154,16 @@ HOST: https://gw.hii.in.th/thing
 + dia: 98.0 (number, fixed-type)
 + pulse: 66.0 (number, fixed-type)
 
+# BloodPressureReturn (BloodPressure)
++ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
++ time: `2019-06-05T06:19:32+00:00` (string, fixed-type)
++ level (BloodPressureLevel)
+
 # BloodPressureLevel (enum)
 + isLow - ความดันต่ำ
 + isNormal - ความดันปกติ
 + isPreHigh - เสี่ยงความดันสูง
 + isHigh - ความดันสูง
-
-# BloodPressureReturn (BloodPressure)
-+ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
-+ time: `2019-06-05T06:19:32+00:00` (string, fixed-type)
-+ level (BloodPressureLevel)
 
 # Temperature (object)
 + temperature: 37.1 (number, fixed-type)
@@ -240,16 +240,6 @@ HOST: https://gw.hii.in.th/thing
 + height: 170.0 (number) - ส่วนสูง
 + weigth: 65.2 (number) - น้ำหนัก
 + bloodPressure (BloodPressure) - ข้อมูลความดัน
-
-# BloodPressure (object)
-+ sys: 110 (number)
-+ dia: 60 (number)
-+ level (BloodPressureLevel)
-
-# BloodPressureLevel (enum)
-+ LOW
-+ NORMAL
-+ HEIGHT
 
 # Sex (enum)
 + MALE - ผู้ชาย

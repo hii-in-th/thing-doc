@@ -51,8 +51,40 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (Height , fixed-type)
 
++ Response 201 (application/json)
+
+    + Attributes (HeightReturn , fixed-type)
+
+## ข้อมูลน้ำหนัก [POST /weights]
+
+    ใส่ข้อมูลน้ำหนัก
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {access token}
+
+    + Attributes (Weight , fixed-type)
+
++ Response 201 (application/json)
+
+    + Attributes (WightReturn , fixed-type)
 
 ## Data Structures
+
+# Weight (object)
++ weight: 48 (number, fixed-type)
++ type (WeightType)
+
+# WightReturn (Weight)
++ sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string, fixed-type)
++ time: `2019-06-05T06:19:27+00:00` (string, fixed-type)
+
+# WeightType (enum)
++ WHEELCHAIR - รถวีลแชร์
++ CHAIR - แบบนั้งเก้าอี้
++ UNDEFINED - ไม่ระบุ เช่น กรอกเอง, อื่นๆ
 
 # Height (object)
 + height: 168 (number, fixed-type) - ข้อมูลส่วนสูง

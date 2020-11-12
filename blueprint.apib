@@ -39,9 +39,13 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (SessionReturn , fixed-type)
 
-## ใส่ข้อมูลส่วนสูง [POST /heights]
+## ใส่ข้อมูลส่วนสูง [POST /session/{sessionId}/heights]
 
     ใส่ข้อมูลส่วนสูง
+
++ Parameters
+    + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string,required)
+      ``หมายเลข session id``
 
 + Request (application/json)
 
@@ -55,9 +59,13 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (HeightReturn , fixed-type)
 
-## ข้อมูลน้ำหนัก [POST /weights]
+## ข้อมูลน้ำหนัก [POST /session/{sessionId}/weights]
 
     ใส่ข้อมูลน้ำหนัก
+
++ Parameters
+    + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string,required)
+      ``หมายเลข session id``
 
 + Request (application/json)
 
@@ -71,9 +79,13 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (WightReturn , fixed-type)
 
-## ข้อมูลค่าออกซิเจนในเลือด [POST /spo2]
+## ข้อมูลค่าออกซิเจนในเลือด [POST /session/{sessionId}/spo2]
 
     ใส่ข้อมูลออกซิเจนในเลือด
+
++ Parameters
+    + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string,required)
+      ``หมายเลข session id``
 
 + Request (application/json)
 
@@ -87,9 +99,13 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (SPO2Return , fixed-type)
 
-## ข้อมูลอุณหภูมิ [POST /temperature]
+## ข้อมูลอุณหภูมิ [POST /session/{sessionId}/temperature]
 
     ใส่ข้อมูลอุณหภูมิ
+
++ Parameters
+    + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string,required)
+      ``หมายเลข session id``
 
 + Request (application/json)
 
@@ -103,9 +119,13 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (TemperatureReturn , fixed-type)
 
-## ข้อมูลความดันเลือด [POST /blood-pressures]
+## ข้อมูลความดันเลือด [POST /session/{sessionId}/blood-pressures]
 
     ใส่ข้อมูลอุณหภูมิ
+
++ Parameters
+    + sessionId: `bba8104c-8754-11e9-bc42-526af7764f64` (string,required)
+      ``หมายเลข session id``
 
 + Request (application/json)
 
@@ -119,7 +139,8 @@ HOST: https://gw.hii.in.th/thing
 
     + Attributes (BloodPressureReturn , fixed-type)
 
-## ดึงผลการวัด [POST /result]
+## บันทึกผลพร้อมคืนค่าข้อมูลการวัด [POST /session/{sessionId}/commit]
+
 
 ## Data Structures
 

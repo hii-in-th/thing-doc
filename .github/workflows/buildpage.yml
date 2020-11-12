@@ -17,8 +17,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Install aglio
     - run: |
         npm install -g aglio
+      env:
+        CI: true
+
+    - name: Build
+    - run: |
         mkdir build
         aglio -i blueprint.apib --theme-variables flatly -o ./build/index.html
         rsync -av --delete ./data ./build/
